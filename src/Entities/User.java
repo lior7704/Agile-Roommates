@@ -1,22 +1,25 @@
+package Entities;
 
 
 public class User {
 	
-	private static int id=0;
+	private int id=0;
 	private String name;
 	private String phoneNumber;
 	private String email;
-	//private Apartment theApartment
-	
+	private Apartment theApartment;
+
+
 	//const':
-	public User(String name, String phoneNumber, String email) {
+	public User(int id, String name, String phoneNumber, String email) {
+		this.id = id;
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 	}
 
-	//setter+getter:
-	public static int getId() {
+	//getters & setters:
+	public int getId() {
 		return id;
 	}
 
@@ -44,11 +47,19 @@ public class User {
 		this.email = email;
 	}
 	
+	public Apartment getTheApartment() {
+		return theApartment;
+	}
+
+	public void setTheApartment(Apartment theApartment) {
+		this.theApartment = theApartment;
+	}
+	
 	public void checkName(String name) {
 	    char[] chars = name.toCharArray();
 	    for (char c : chars) {
 	        if(!Character.isLetter(c)) {
-	        	System.err.println("ahah");
+	        	System.err.println("Invalid name");
 	        }
 	    }
 	}

@@ -1,3 +1,4 @@
+package Entities;
 public class Product {
 	private String nameOfProduct;
 	private int amount;
@@ -26,7 +27,7 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return nameOfProduct+" ("+ amount + ")";
+		return nameOfProduct +" (" + amount + ")";
 	}
 
 }
