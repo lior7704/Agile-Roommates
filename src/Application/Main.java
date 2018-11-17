@@ -12,7 +12,8 @@ public class Main {
 	public static void main(String[] args) {
 		int choice;
 		Scanner scan = new Scanner(System.in);
-		
+		User elad = new User("Elad", "0544556677", "elad.madar@gmail.com");
+		System.out.println(elad.getId());
 		System.out.println("Populating Apartment...");
 		Apartment a = initApartment();
 		
@@ -79,11 +80,11 @@ public class Main {
 	}
 	
 	private static Apartment initApartment() {
-		User elad = new User(1111, "Elad", "0544556677", "elad.madar@gmail.com");
-		User giron = new User(2222, "Giron", "0544556678", "giron.aptik@gmail.com");
-		User nofar = new User(3333, "Nofar", "0544556679", "nofar.alfasi@gmail.com");
-		User lior = new User(4444, "Lior", "0544556680", "lior.gal@gmail.com");
-		User chen = new User(5555, "Chen", "0544556681", "chen.turgeman@gmail.com");
+		User elad = new User("Elad", "0544556677", "elad.madar@gmail.com");
+		User giron = new User("Giron", "0544556678", "giron.aptik@gmail.com");
+		User nofar = new User("Nofar", "0544556679", "nofar.alfasi@gmail.com");
+		User lior = new User("Lior", "0544556680", "lior.gal@gmail.com");
+		User chen = new User("Chen", "0544556681", "chen.turgeman@gmail.com");
 
 		List<User> roommates = new ArrayList<User>();
 		
