@@ -64,5 +64,23 @@ public class User {
 	    }
 	}
 	
+	
+	public void checkPhoneNumber(String phoneNumber) {
+		if (!phoneNumber.matches("[0-9]+") && phoneNumber.length() > 13) {
+			System.err.println("Invalid phone number");
+		}
+	}
+	
+	public void checkEmail(String email) {
+		if (email.contains("@") && !email.contains(".com")) {
+			System.err.println("Invalid Email");
+		}
+	}
+
+	public String printUser() {
+		return "User [id=" + id + ", name=" + name + ", phoneNumber=" + phoneNumber + ", email=" + email
+				+ ", theApartment=" + theApartment + "]";
+	}
+	
 		
 }
