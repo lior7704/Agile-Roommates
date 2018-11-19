@@ -12,10 +12,14 @@ public class Main {
 	public static void main(String[] args) {
 		int choice;
 		Scanner scan = new Scanner(System.in);
-		User elad = new User("Elad", "0544556677", "elad.madar@gmail.com");
+		User elad = new User(1111, "Elad", "0544556677", "elad.madar@gmail.com");
 		System.out.println(elad.getId());
 		System.out.println("Populating Apartment...");
 		Apartment a = initApartment();
+		a.addResident(elad);
+		for (int i = 0; i < a.getResidents().size(); i++) {
+			System.out.println(a.getResidents().get(i).toString());
+		}
 		
 		System.out.println("Adding groceries...");
 		a.getShoppingList().addProduct(new Product("apple", 7));
@@ -80,11 +84,12 @@ public class Main {
 	}
 	
 	private static Apartment initApartment() {
-		User elad = new User("Elad", "0544556677", "elad.madar@gmail.com");
-		User giron = new User("Giron", "0544556678", "giron.aptik@gmail.com");
-		User nofar = new User("Nofar", "0544556679", "nofar.alfasi@gmail.com");
-		User lior = new User("Lior", "0544556680", "lior.gal@gmail.com");
-		User chen = new User("Chen", "0544556681", "chen.turgeman@gmail.com");
+		User elad = new User(1111, "Elad", "0544556677", "elad.madar@gmail.com");
+		User giron = new User(2222, "Giron", "0544556678", "giron.aptik@gmail.com");
+		User nofar = new User(3333, "Nofar", "0544556679", "nofar.alfasi@gmail.com");
+		User lior = new User(4444, "Lior", "0544556680", "lior.gal@gmail.com");
+		User chen = new User(5555, "Chen", "0544556681", "chen.turgeman@gmail.com");
+		
 
 		List<User> roommates = new ArrayList<User>();
 		
@@ -93,7 +98,6 @@ public class Main {
 		roommates.add(nofar);
 		roommates.add(lior);
 		roommates.add(chen);
-		
 		return new Apartment(roommates);
 	}
 	
@@ -124,19 +128,21 @@ public class Main {
 			if(checkExit(amount))
 				return null;
 			validFlag = false;
-		} while(amount > 0);
+		} while(amount <= 0);
 		p = new Product(nameOfProduct, amount);
 		return p;
 	}
 	
 	private static boolean checkName(String name) {
+		if(name == null)
+			return true;
 	    char[] chars = name.toCharArray();
 	    for (char c : chars) {
 	        if(!Character.isLetter(c)) {
-	        	return false;
+	        	return true;
 	        }
 	    }
-	    return true;
+	    return false;
 	}
 	
 	private static int getIdToRemoveFromUser(Scanner scan, Apartment a) {
@@ -152,7 +158,7 @@ public class Main {
 			if(checkExit(serialNum))
 				return 0;
 			validFlag = false;
-		} while(serialNum > 0 && serialNum < a.getAmountOfItemsInShoppingList());
+		} while(serialNum < 0 || serialNum > a.getAmountOfItemsInShoppingList());
 		
 		return serialNum;
 	}

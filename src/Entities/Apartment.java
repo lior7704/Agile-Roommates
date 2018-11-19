@@ -40,10 +40,10 @@ public class Apartment {
 	private boolean alreadyResident(int id) {
 		for (User user : residents) {
 			if(user.getId() == id) {
-				return false;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	public void showShoppingList() {

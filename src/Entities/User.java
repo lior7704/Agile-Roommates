@@ -11,8 +11,8 @@ public class User {
 
 
 	//const':
-	public User(String name, String phoneNumber, String email) {
-		this.id = createID();
+	public User(int id, String name, String phoneNumber, String email) {
+		this.id = id;
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
@@ -77,14 +77,10 @@ public class User {
 		}
 	}
 
-	public String printUser() {
+	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", phoneNumber=" + phoneNumber + ", email=" + email
 				+ ", theApartment=" + theApartment + "]";
 	}
 	
-	public static synchronized String createID()
-	{
-	    return String.valueOf(id++);
-	}    
 		
 }
