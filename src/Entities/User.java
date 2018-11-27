@@ -7,8 +7,6 @@ public class User {
 	private String name;
 	private String phoneNumber;
 	private String email;
-	private Apartment theApartment;
-
 
 	//const':
 	public User(int id, String name, String phoneNumber, String email) {
@@ -47,13 +45,6 @@ public class User {
 		this.email = email;
 	}
 	
-	public Apartment getTheApartment() {
-		return theApartment;
-	}
-
-	public void setTheApartment(Apartment theApartment) {
-		this.theApartment = theApartment;
-	}
 	
 	public void checkName(String name) {
 	    char[] chars = name.toCharArray();
@@ -79,7 +70,7 @@ public class User {
 
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", phoneNumber=" + phoneNumber + ", email=" + email
-				+ ", theApartment=" + theApartment + "]";
+				 + "]";
 	}
 	
 		
