@@ -1,5 +1,7 @@
 package Entities;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
 	
@@ -7,6 +9,7 @@ public class User {
 	private String name;
 	private String phoneNumber;
 	private String email;
+	private List<Bill> userBillList;
 
 	//const':
 	public User(int id, String name, String phoneNumber, String email) {
@@ -14,6 +17,7 @@ public class User {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
+		this.userBillList = new ArrayList<Bill>();
 	}
 
 	//getters & setters:
@@ -45,6 +49,17 @@ public class User {
 		this.email = email;
 	}
 	
+	public List<Bill> getUserBillList() {
+		return userBillList;
+	}
+
+	public void setUserBillList(List<Bill> userBillList) {
+		this.userBillList = userBillList;
+	}
+
+	public void addToList(Bill theBill) {
+		this.userBillList.add(theBill);
+	}
 	
 	public void checkName(String name) {
 	    char[] chars = name.toCharArray();
