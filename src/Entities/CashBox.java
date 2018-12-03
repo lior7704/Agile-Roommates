@@ -1,54 +1,18 @@
 
 package Entities;
 
+import java.util.List;
 import java.util.Map;
 
 public class CashBox {
 
-	private String nameOfBill;
-	private double cost;
-	private boolean hasPayed;
-	private User payedBy;
 	private Map<User, Double> usersCashBalance;
+	private List<Bill> billList;
 	private double totalCashBalance;
-	private double tempCost;
 
-	
-	public CashBox(Map<User, Double> usersCashBalance, double totalCashBalance) {
+	public CashBox(Map<User, Double> usersCashBalance, List<Bill> billList) {
 		this.usersCashBalance = usersCashBalance;
-		this.totalCashBalance = totalCashBalance;
-	}
-
-	public String getNameOfBill() {
-		return nameOfBill;
-	}
-
-	public void setNameOfBill(String nameOfBill) {
-		this.nameOfBill = nameOfBill;
-	}
-
-	public double getCost() {
-		return cost;
-	}
-
-	public void setCost(double cost) {
-		this.cost = cost;
-	}
-
-	public boolean isHasPayed() {
-		return hasPayed;
-	}
-
-	public void setHasPayed(boolean hasPayed) {
-		this.hasPayed = hasPayed;
-	}
-
-	public User getPayedBy() {
-		return payedBy;
-	}
-
-	public void setPayedBy(User payedBy) {
-		this.payedBy = payedBy;
+		this.billList = billList;
 	}
 
 	public Map<User, Double> getUsersCashBalance() {
@@ -59,6 +23,14 @@ public class CashBox {
 		this.usersCashBalance = usersCashBalance;
 	}
 
+	public List<Bill> getBillList() {
+		return billList;
+	}
+
+	public void setBillList(List<Bill> billList) {
+		this.billList = billList;
+	}
+
 	public double getTotalCashBalance() {
 		return totalCashBalance;
 	}
@@ -67,21 +39,34 @@ public class CashBox {
 		this.totalCashBalance = totalCashBalance;
 	}
 
-	public void payBill(double cost, User payedBy, Map<User, Double> usersCashBalance) {
-		double needToPay = cost / usersCashBalance.size();
+	public void payBill(Bill theBill, Map<User, Double> usersCashBalance) {
+		double needToPay = theBill.sharedPart(usersCashBalance.size());
 
 		for (User key : usersCashBalance.keySet()) {
 			double userNeedToPay = usersCashBalance.get(key);
-			if (!usersCashBalance.containsKey(payedBy)) {
+			if (!usersCashBalance.containsKey(theBill.getPayedBy())) {
 				userNeedToPay = userNeedToPay - needToPay;
 				usersCashBalance.replace(key, userNeedToPay);
-			}
-			else {
-				userNeedToPay = userNeedToPay + cost;
-				usersCashBalance.replace(payedBy, userNeedToPay);
+			} else {
+				userNeedToPay = userNeedToPay + needToPay * (usersCashBalance.size() - 1);
+				usersCashBalance.replace(theBill.getPayedBy(), userNeedToPay);
 
 			}
 
 		}
 	}
+
+	public void removeBillFromList(Bill theBill) {
+		billList.remove(theBill);
+		totalCashBalance = totalCashBalance - theBill.getCost();
+	}
+	
+	public void addBillToList(Bill theBill) {
+		billList.add(theBill);
+		totalCashBalance = totalCashBalance + theBill.getCost();
+	}
+	
+	
+	
+
 }
