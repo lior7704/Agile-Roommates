@@ -6,13 +6,12 @@ public class Bill {
 	private double cost;
 	private boolean hasPayed;
 	private User payedBy;
-	private String date;
+	private String datesOfBill;
 	
-	public Bill(String nameOfBill, double cost, boolean hasPayed, User payedBy) {
+	public Bill(String nameOfBill, double cost, String datesOfBill) {
 		this.nameOfBill = nameOfBill;
 		this.cost = cost;
-		this.hasPayed = hasPayed;
-		this.payedBy = payedBy;
+		this.datesOfBill = datesOfBill;
 	}
 
 	public String getNameOfBill() {
@@ -47,6 +46,14 @@ public class Bill {
 		this.payedBy = payedBy;
 	}
 	
+	public String getDatesOfBill() {
+		return datesOfBill;
+	}
+
+	public void setDatesOfBill(String datesOfBill) {
+		this.datesOfBill = datesOfBill;
+	}
+
 	public double sharedPart(int amountOfUsers) {
 		return this.getCost() / amountOfUsers;
 	}

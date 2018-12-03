@@ -1,8 +1,7 @@
 
 package Entities;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CashBox {
 
@@ -43,6 +42,8 @@ public class CashBox {
 		double needToPay = theBill.sharedPart(usersCashBalance.size());
 
 		for (User key : usersCashBalance.keySet()) {
+			theBill.setPayedBy(key);
+			theBill.setHasPayed(true);
 			double userNeedToPay = usersCashBalance.get(key);
 			if (!usersCashBalance.containsKey(theBill.getPayedBy())) {
 				userNeedToPay = userNeedToPay - needToPay;
@@ -50,9 +51,8 @@ public class CashBox {
 			} else {
 				userNeedToPay = userNeedToPay + needToPay * (usersCashBalance.size() - 1);
 				usersCashBalance.replace(theBill.getPayedBy(), userNeedToPay);
-
+				key.addToList(theBill);
 			}
-
 		}
 	}
 
