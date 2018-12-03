@@ -11,6 +11,7 @@ public class CashBox {
 	private User payedBy;
 	private Map<User, Double> usersCashBalance;
 	private double totalCashBalance;
+	private double tempCost;
 
 	
 	public CashBox(Map<User, Double> usersCashBalance, double totalCashBalance) {
