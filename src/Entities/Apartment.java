@@ -54,10 +54,6 @@ public class Apartment {
 		shoppingList.addProduct(p);	
 	}
 
-	public void removeProductFromList(int i) {
-		shoppingList.removeProduct(i);
-	}
-
 	public int getAmountOfItemsInShoppingList() {
 		return shoppingList.getAmountOfItems();
 	}

@@ -1,8 +1,6 @@
 package GUI;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
-
+import Entities.Apartment;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,9 +12,12 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 class CashBoxButton extends CommandButton {
-	public CashBoxButton(AgileRoommatesPane pane, RandomAccessFile r) {
-		super(pane, r);
+	private Apartment apartment;
+
+	public CashBoxButton(Apartment apartment) {
+		super(apartment);
 		this.setText(CASH_BOX);
+		this.apartment = apartment;
 	}
 
 	@Override
@@ -51,19 +52,6 @@ class CashBoxButton extends CommandButton {
 		jcboFilled.setPrefWidth(100);
 		jtfRadius.setPrefWidth(100);
 		label.setPrefWidth(100);
-		jtfRadius.setOnAction(e -> Execute());
-		jcboFilled.setOnAction(e -> Execute());
-	}
-
-	@Override
-	public void Execute() {
-		try {
-			long currentPosition = getFile().getFilePointer();
-			if (currentPosition < getFile().length())
-				readAddress(currentPosition);
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
 	}
 }
 

@@ -49,7 +49,7 @@ public class MainMenu {
 					break;
 				}
 				else
-					a.removeProductFromList(num);
+					//a.getShoppingList().removeProductFromList(num);
 				break;
 				
 			case 4:

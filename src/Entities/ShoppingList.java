@@ -23,13 +23,11 @@ public class ShoppingList {
 		for (Product product : products) {
 			if(product.getNameOfProduct().equals(p.getNameOfProduct())) {
 				product.setAmount(product.getAmount() + p.getAmount());
+				System.out.println(product.getAmount());
+				return;
 			}
 		}
 		this.products.add(p);
-	}
-	
-	public void removeProduct(int i) {
-		this.products.remove(i-1);
 	}
 	
 	public void show() {
@@ -39,5 +37,16 @@ public class ShoppingList {
 	public int getAmountOfItems() {
 		return products.size();
 	}
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void remove(Product selectedItem) {
+		products.remove(selectedItem);
+		
+	}
+	
+	
 	
 }

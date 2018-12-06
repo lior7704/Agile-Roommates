@@ -1,27 +1,19 @@
 package GUI;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import Entities.Apartment;
 
 class ShoppingListButton extends CommandButton {
-	public ShoppingListButton(AgileRoommatesPane pane, RandomAccessFile r) {
-		super(pane, r);
+	private Apartment apartment;
+	
+	public ShoppingListButton(Apartment apartment) {
+		super(apartment);
+		this.apartment = apartment;
 		this.setText(SHOPPING_LIST);
 	}
 
 	@Override
 	public void OpenNewPane() {
-		new ShoppingListPane();
-		//jtfProduct.setOnAction(e -> Execute());
+		new ShoppingListPane(apartment);
 	}
 
-	@Override
-	public void Execute() {
-		try {
-			if (getFile().length() > 0)
-				readAddress(0);
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-	}
 }

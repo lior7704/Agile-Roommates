@@ -1,8 +1,6 @@
 package GUI;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
-
+import Entities.Apartment;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,9 +12,12 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 class MessagesButton extends CommandButton {
-	public MessagesButton(AgileRoommatesPane pane, RandomAccessFile r) {
-		super(pane, r);
+	private Apartment apartment;
+	
+	public MessagesButton(Apartment apartment) {
+		super(apartment);
 		this.setText(MESSAGES);
+		this.apartment = apartment;
 	}
 
 	@Override
@@ -48,20 +49,5 @@ class MessagesButton extends CommandButton {
 		jcboFilled.setValue(false);
 		jcboFilled.setPrefWidth(100);
 		jtfRadius.setPrefWidth(100);
-		jtfRadius.setOnAction(e -> Execute());
-		jcboFilled.setOnAction(e -> Execute());
-	}
-
-	@Override
-	public void Execute() {
-		try {
-			long currentPosition = getFile().getFilePointer();
-			if (currentPosition - 2 * 2 * RECORD_SIZE >= 0)
-				readAddress(currentPosition - 2 * 2 * RECORD_SIZE);
-			else
-				;
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
 	}
 }
