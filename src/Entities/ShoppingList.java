@@ -46,7 +46,4 @@ public class ShoppingList {
 		products.remove(selectedItem);
 		
 	}
-	
-	
-	
 }

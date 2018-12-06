@@ -1,22 +1,24 @@
 package Entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Apartment {
 	private List<User> residents;
 	private ShoppingList shoppingList;
+	private MessageList messages;
 	
-	
-	public Apartment(List<User> residents, ShoppingList shoppingList) {
-		super();
-		this.residents = residents;
-		this.shoppingList = shoppingList;
+	public Apartment() {
+		residents = new ArrayList<User>();
+		shoppingList = new ShoppingList();
+		messages = new MessageList();
 	}
 	
 	public Apartment(List<User> residents) {
 		super();
 		this.residents = residents;
 		this.shoppingList = new ShoppingList();
+		this.messages = new MessageList();
 	}
 
 	public List<User> getResidents() {
@@ -27,6 +29,10 @@ public class Apartment {
 		return shoppingList;
 	}
 	
+	public MessageList getMessages() {
+		return messages;
+	}
+
 	public boolean addResident(User newGuy) {
 		if(alreadyResident(newGuy.getId())) {
 			return false;
@@ -45,17 +51,4 @@ public class Apartment {
 		}
 		return false;
 	}
-	
-	public void showShoppingList() {
-		shoppingList.show();
-	}
-
-	public void addProductToList(Product p) {
-		shoppingList.addProduct(p);	
-	}
-
-	public int getAmountOfItemsInShoppingList() {
-		return shoppingList.getAmountOfItems();
-	}
-	
 }

@@ -32,14 +32,14 @@ public class MainMenu {
 			choice = optionSelector(scan);
 			switch (choice){
 			case 1:
-				a.showShoppingList();
+				//a.showShoppingList();
 				break;
 			
 			case 2:
 				Product p = getProductToAddFromUser(scan);
 				if(p == null) 
 					break;
-				a.addProductToList(p);
+				a.getShoppingList().addProduct(p);
 				break;
 			
 			case 3:
@@ -158,7 +158,7 @@ public class MainMenu {
 			if(checkExit(serialNum))
 				return 0;
 			validFlag = false;
-		} while(serialNum < 0 || serialNum > a.getAmountOfItemsInShoppingList());
+		} while(serialNum < 0 || serialNum > a.getShoppingList().getAmountOfItems());
 		
 		return serialNum;
 	}
