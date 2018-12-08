@@ -1,15 +1,11 @@
 package Entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class User {
 	
 	private int id=0;
 	private String name;
 	private String phoneNumber;
 	private String email;
-	//private List<Bill> userBillList;
 
 	//const':
 	public User(int id, String name, String phoneNumber, String email) {
@@ -17,7 +13,6 @@ public class User {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
-		//this.userBillList = new ArrayList<Bill>();
 	}
 
 	//getters & setters:

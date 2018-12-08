@@ -8,11 +8,11 @@ import java.util.Map;
 
 public class CashBox {
 
-	private Map<User, Double> usersCashBalance;
+	private HashMap<User, Double> usersCashBalance;
 	private List<Bill> billList;
 	private double totalCashBalance;
 
-	public CashBox(Map<User, Double> usersCashBalance, List<Bill> billList) {
+	public CashBox(HashMap<User, Double> usersCashBalance, List<Bill> billList) {
 		this.usersCashBalance = usersCashBalance;
 		this.billList = billList;
 	}
@@ -27,7 +27,7 @@ public class CashBox {
 		return usersCashBalance;
 	}
 
-	public void setUsersCashBalance(Map<User, Double> usersCashBalance) {
+	public void setUsersCashBalance(HashMap<User, Double> usersCashBalance) {
 		this.usersCashBalance = usersCashBalance;
 	}
 
@@ -50,6 +50,17 @@ public class CashBox {
 	public void payBill(Bill theBill, User currentUser) {
 		theBill.setPayedBy(currentUser);
 		theBill.setIsPayed(true);
+		totalCashBalance -= theBill.getCost();
+		for (User user : usersCashBalance.keySet()) {
+			if(user == currentUser) {
+				double value = theBill.getCost() - theBill.sharedPart(usersCashBalance.size());
+				usersCashBalance.put(user, usersCashBalance.get(user) + value);
+			}
+			else {
+				double value = theBill.sharedPart(usersCashBalance.size());
+				usersCashBalance.put(user, usersCashBalance.get(user) - value);
+			}	
+		}
 	}
 
 	public void removeBillFromList(Bill theBill) {
