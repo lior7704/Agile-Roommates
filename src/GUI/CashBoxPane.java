@@ -22,21 +22,27 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class CashBoxPane {
-	private Button addBillButton; 
+	private Button addBillButton;
 	private Button payButton;
 	private ListView<Bill> listView;
 	private Apartment apartment;
-	
+	private GridPane balancePane;
+
 	public CashBoxPane(Apartment apartment, User currentUser) {
 		this.apartment = apartment;
 		Stage stage = new Stage();
+
+		balancePane = new GridPane();
+		setBalanceView();
+
 		GridPane billsPane = new GridPane();
-		billsPane.add(addBillButton=new Button("Add Bill"),0, 1);
-		billsPane.add(payButton=new Button("Pay Bill"),0, 2);
+		billsPane.add(addBillButton = new Button("Add Bill"), 0, 1);
+		billsPane.add(payButton = new Button("Pay Bill"), 0, 2);
 		billsPane.setVisible(true);
 		TextField jtfBillName = new TextField();
 		TextField jtfBillCost = new TextField();
 		TextField jtfBillDueDate = new TextField();
+
 		listView = new ListView<Bill>();
 
 		billsPane.setPadding(new Insets(15));
@@ -60,50 +66,73 @@ public class CashBoxPane {
 		listView.setPrefWidth(100);
 		listView.setPrefHeight(70);
 		VBox box = new VBox();
-		Label weNeedToPayLabel=new Label("Bills we need to pay");
-		VBox.setMargin(weNeedToPayLabel, new Insets(20, 20, 20, 20)); 
-        stage.setTitle("ListViewSample");
-        box.getChildren().addAll(listView);
-        VBox.setVgrow(listView, Priority.ALWAYS);
-        
-        BorderPane unitPane = new BorderPane();
-		
-        unitPane.setTop(billsPane);
-        unitPane.setCenter(box);
-        
-        Scene scene = new Scene(unitPane, 400, 800);
-        stage.setScene(scene);
-        stage.setAlwaysOnTop(true);
+		Label weNeedToPayLabel = new Label("Bills we need to pay");
+		VBox.setMargin(weNeedToPayLabel, new Insets(20, 20, 20, 20));
+		stage.setTitle("ListViewSample");
+		box.getChildren().addAll(listView);
+		VBox.setVgrow(listView, Priority.ALWAYS);
+
+		BorderPane unitPane = new BorderPane();
+
+		unitPane.setTop(billsPane);
+		unitPane.setCenter(box);
+		unitPane.setBottom(balancePane);
+
+		Scene scene = new Scene(unitPane, 400, 800);
+		stage.setScene(scene);
+		stage.setAlwaysOnTop(true);
 		stage.setResizable(false);
 		stage.setX(200);
 		stage.setY(200);
 		stage.show();
 		stage.setTitle("Cash-Box");
-		
-		addBillButton.setOnMouseClicked(e-> {
+
+		addBillButton.setOnMouseClicked(e -> {
 			double amount = 0;
 			try {
 				amount = Double.parseDouble(jtfBillCost.getText());
 			} catch (NumberFormatException e1) {
-				 String message = "Amount must be numeral!";
-				JOptionPane.showMessageDialog(new JFrame(), message, "Dialog",
-					        JOptionPane.ERROR_MESSAGE);
+				String message = "Amount must be numeral!";
+				JOptionPane.showMessageDialog(new JFrame(), message, "Dialog", JOptionPane.ERROR_MESSAGE);
 			}
-			if(jtfBillName.getText().length() != 0 && amount > 0) {
+			if (jtfBillName.getText().length() != 0 && amount > 0) {
 				apartment.getCashBox().addBillToList(new Bill(jtfBillName.getText(), amount, jtfBillDueDate.getText()));
 			}
 			setListView();
+			setBalanceView();
 		});
-		payButton.setOnMouseClicked(e-> {
+		payButton.setOnMouseClicked(e -> {
 			apartment.getCashBox().payBill(listView.getSelectionModel().getSelectedItem(), currentUser);
 			setListView();
+			setBalanceView();
 		});
 	}
-	
+
 	public void setListView() {
-		ObservableList<Bill> items =FXCollections.observableArrayList();
+		ObservableList<Bill> items = FXCollections.observableArrayList();
 		items.addAll(apartment.getCashBox().getBillList());
 		listView.setItems(items);
 		listView.refresh();
 	}
+
+	public void setBalanceView() {
+		int balanceIndex = 1;
+		balancePane.getChildren().clear();
+		balancePane.add(new Label("Balance Status: "), 0, 0);
+		balancePane.add(new Label("Total Balance Status: "), 2, 0);
+		balancePane.add(new Label(String.valueOf(apartment.getCashBox().getTotalCashBalance())), 3, 0);
+		balancePane.setPadding(new Insets(3));
+		balancePane.setHgap(10);
+		balancePane.setVgap(10);
+		balancePane.setMaxHeight(20);
+		balancePane.setAlignment(Pos.CENTER_LEFT);
+		for (User user : apartment.getCashBox().getUsersCashBalance().keySet()) {
+			balancePane.add(new Label(user.getName()), 0, balanceIndex);
+			balancePane.add(new Label(String.valueOf(apartment.getCashBox().getUsersCashBalance().get(user))), 1,
+					balanceIndex);
+			balanceIndex++;
+		}
+	}
+
+	
 }

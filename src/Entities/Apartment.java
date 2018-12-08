@@ -13,7 +13,7 @@ public class Apartment {
 		residents = new ArrayList<User>();
 		shoppingList = new ShoppingList();
 		messages = new MessageList();
-		cashBox = new CashBox();
+		cashBox = new CashBox(residents);
 	}
 	
 	public Apartment(List<User> residents) {
@@ -21,7 +21,7 @@ public class Apartment {
 		this.residents = residents;
 		this.shoppingList = new ShoppingList();
 		this.messages = new MessageList();
-		this.cashBox = new CashBox();
+		this.cashBox = new CashBox(residents);
 	}
 
 	public List<User> getResidents() {

@@ -16,9 +16,12 @@ public class CashBox {
 		this.usersCashBalance = usersCashBalance;
 		this.billList = billList;
 	}
-	
-	public CashBox() {
+
+	public CashBox(List<User> residents) {
 		usersCashBalance = new HashMap<User, Double>();
+		for(User user : residents) {
+			usersCashBalance.put(user, 0.0);
+		}
 		billList = new ArrayList<Bill>();
 		totalCashBalance = 0;
 	}
@@ -52,14 +55,13 @@ public class CashBox {
 		theBill.setIsPayed(true);
 		totalCashBalance -= theBill.getCost();
 		for (User user : usersCashBalance.keySet()) {
-			if(user == currentUser) {
+			if (user == currentUser) {
 				double value = theBill.getCost() - theBill.sharedPart(usersCashBalance.size());
 				usersCashBalance.put(user, usersCashBalance.get(user) + value);
-			}
-			else {
+			} else {
 				double value = theBill.sharedPart(usersCashBalance.size());
 				usersCashBalance.put(user, usersCashBalance.get(user) - value);
-			}	
+			}
 		}
 	}
 
@@ -67,14 +69,11 @@ public class CashBox {
 		billList.remove(theBill);
 		totalCashBalance = totalCashBalance - theBill.getCost();
 	}
-	
+
 	public void addBillToList(Bill theBill) {
 		billList.add(theBill);
 		totalCashBalance = totalCashBalance + theBill.getCost();
 	}
-	
-	
-	
+
 
 }
-
