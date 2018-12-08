@@ -8,7 +8,7 @@ public interface AgileRoommatesFinals {
 	final static String SHOPPING_LIST = "Shopping List"; // FIRST 
 	final static String CASH_BOX = "Cash Box"; // NEXT
 	final static String MESSAGES = "Messages"; // PREVIOUS 
-	final static String APARTMENT_ID = "Apartment ID"; // NAME 
+	final static String USER_NAME = "User Name"; // NAME 
 	final static String USER_ID = "User ID"; // STREET 
 	final static int NUMBER_OF_PANES = 2;
 	final static int APARTMENT_ID_SIZE = 32; // NAME_SIZE 

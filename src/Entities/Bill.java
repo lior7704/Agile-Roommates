@@ -4,14 +4,14 @@ public class Bill {
 
 	private String nameOfBill;
 	private double cost;
-	private boolean hasPayed;
+	private boolean isPayed;
 	private User payedBy;
-	private String datesOfBill;
+	private String dueDate;
 	
-	public Bill(String nameOfBill, double cost, String datesOfBill) {
+	public Bill(String nameOfBill, double cost, String dueDate) {
 		this.nameOfBill = nameOfBill;
 		this.cost = cost;
-		this.datesOfBill = datesOfBill;
+		this.dueDate = dueDate;
 	}
 
 	public String getNameOfBill() {
@@ -30,12 +30,12 @@ public class Bill {
 		this.cost = cost;
 	}
 
-	public boolean isHasPayed() {
-		return hasPayed;
+	public boolean isPayed() {
+		return isPayed;
 	}
 
-	public void setHasPayed(boolean hasPayed) {
-		this.hasPayed = hasPayed;
+	public void setIsPayed(boolean hasPayed) {
+		this.isPayed = hasPayed;
 	}
 
 	public User getPayedBy() {
@@ -47,15 +47,21 @@ public class Bill {
 	}
 	
 	public String getDatesOfBill() {
-		return datesOfBill;
+		return dueDate;
 	}
 
 	public void setDatesOfBill(String datesOfBill) {
-		this.datesOfBill = datesOfBill;
+		this.dueDate = datesOfBill;
 	}
 
 	public double sharedPart(int amountOfUsers) {
 		return this.getCost() / amountOfUsers;
+	}
+
+	@Override
+	public String toString() {
+		return nameOfBill + ", cost: " + cost + ", is Payed? " + isPayed + ", payed by: " + payedBy
+				+ ", due until: " + dueDate;
 	}
 
 }

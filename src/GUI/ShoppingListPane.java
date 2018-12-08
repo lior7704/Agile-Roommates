@@ -25,6 +25,7 @@ public class ShoppingListPane {
 	private Button removeButton;
 	private ListView<Product> listView;
 	private Apartment apartment;
+	
 	public ShoppingListPane(Apartment apartment) {
 		this.apartment = apartment;
 		Stage stage = new Stage();

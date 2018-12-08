@@ -1,7 +1,10 @@
 
 package Entities;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CashBox {
 
@@ -12,6 +15,12 @@ public class CashBox {
 	public CashBox(Map<User, Double> usersCashBalance, List<Bill> billList) {
 		this.usersCashBalance = usersCashBalance;
 		this.billList = billList;
+	}
+	
+	public CashBox() {
+		usersCashBalance = new HashMap<User, Double>();
+		billList = new ArrayList<Bill>();
+		totalCashBalance = 0;
 	}
 
 	public Map<User, Double> getUsersCashBalance() {
@@ -38,22 +47,9 @@ public class CashBox {
 		this.totalCashBalance = totalCashBalance;
 	}
 
-	public void payBill(Bill theBill, Map<User, Double> usersCashBalance) {
-		double needToPay = theBill.sharedPart(usersCashBalance.size());
-
-		for (User key : usersCashBalance.keySet()) {
-			theBill.setPayedBy(key);
-			theBill.setHasPayed(true);
-			double userNeedToPay = usersCashBalance.get(key);
-			if (!usersCashBalance.containsKey(theBill.getPayedBy())) {
-				userNeedToPay = userNeedToPay - needToPay;
-				usersCashBalance.replace(key, userNeedToPay);
-			} else {
-				userNeedToPay = userNeedToPay + needToPay * (usersCashBalance.size() - 1);
-				usersCashBalance.replace(theBill.getPayedBy(), userNeedToPay);
-				key.addToList(theBill);
-			}
-		}
+	public void payBill(Bill theBill, User currentUser) {
+		theBill.setPayedBy(currentUser);
+		theBill.setIsPayed(true);
 	}
 
 	public void removeBillFromList(Bill theBill) {

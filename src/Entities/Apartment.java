@@ -7,11 +7,13 @@ public class Apartment {
 	private List<User> residents;
 	private ShoppingList shoppingList;
 	private MessageList messages;
+	private CashBox cashBox;
 	
 	public Apartment() {
 		residents = new ArrayList<User>();
 		shoppingList = new ShoppingList();
 		messages = new MessageList();
+		cashBox = new CashBox();
 	}
 	
 	public Apartment(List<User> residents) {
@@ -19,6 +21,7 @@ public class Apartment {
 		this.residents = residents;
 		this.shoppingList = new ShoppingList();
 		this.messages = new MessageList();
+		this.cashBox = new CashBox();
 	}
 
 	public List<User> getResidents() {
@@ -31,6 +34,14 @@ public class Apartment {
 	
 	public MessageList getMessages() {
 		return messages;
+	}
+
+	public CashBox getCashBox() {
+		return cashBox;
+	}
+
+	public void setCashBox(CashBox cashBox) {
+		this.cashBox = cashBox;
 	}
 
 	public boolean addResident(User newGuy) {
