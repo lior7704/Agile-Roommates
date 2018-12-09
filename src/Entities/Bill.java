@@ -7,11 +7,13 @@ public class Bill {
 	private boolean isPayed;
 	private User payedBy;
 	private String dueDate;
-	
+
 	public Bill(String nameOfBill, double cost, String dueDate) {
 		this.nameOfBill = nameOfBill;
 		this.cost = cost;
 		this.dueDate = dueDate;
+		this.isPayed = false;
+		this.payedBy = null;
 	}
 
 	public String getNameOfBill() {
@@ -34,8 +36,8 @@ public class Bill {
 		return isPayed;
 	}
 
-	public void setIsPayed(boolean hasPayed) {
-		this.isPayed = hasPayed;
+	public void setIsPayed(boolean isPayed) {
+		this.isPayed = isPayed;
 	}
 
 	public User getPayedBy() {
@@ -43,9 +45,10 @@ public class Bill {
 	}
 
 	public void setPayedBy(User payedBy) {
+		setIsPayed(true);
 		this.payedBy = payedBy;
 	}
-	
+
 	public String getDatesOfBill() {
 		return dueDate;
 	}
@@ -60,8 +63,10 @@ public class Bill {
 
 	@Override
 	public String toString() {
-		return nameOfBill + ", cost: " + cost + ", is Payed? " + isPayed + ", payed by: " + payedBy
-				+ ", due until: " + dueDate;
+		if (isPayed == true)
+			return nameOfBill + ", cost: " + cost + ", payed by: " + payedBy;
+		else
+			return nameOfBill + ", cost: " + cost + ", not payed" + ", due until: " + dueDate;
 	}
 
 }

@@ -1,27 +1,31 @@
 package GUI;
 
-import Entities.Apartment;
-import javafx.collections.FXCollections;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
-class MessagesButton extends CommandButton {
-	private Apartment apartment;
-	
-	public MessagesButton(Apartment apartment) {
-		super(apartment);
+import Entities.Apartment;
+import Entities.User;
+
+public class MessagesButton extends CommandButton {
+
+	public MessagesButton(Apartment apartment, User currentUser) {
+		super(apartment, currentUser);
 		this.setText(MESSAGES);
-		this.apartment = apartment;
 	}
 
 	@Override
-	public void OpenNewPane() {
-		new MessageListPane(apartment);
+	public void OpenNewPane(Apartment apartment, User currentUser) throws Exception {
+		new MessageListPane(apartment, currentUser);
+		/*
+		try {
+			new MessageListPane(apartment, currentUser);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
 	}
 }

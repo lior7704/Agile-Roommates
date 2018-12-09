@@ -47,8 +47,14 @@ public class CashBox {
 		this.totalCashBalance = totalCashBalance;
 	}
 
-	public void payBill(Bill theBill, User currentUser) {
-		theBill.setPayedBy(currentUser);
+	public void payBill(Bill theBill, User user) {
+		int i=0;
+		for(Bill b: billList) {
+			if(b.getNameOfBill()==theBill.getNameOfBill())
+				b.setPayedBy(user);
+		}
+		
+		theBill.setPayedBy(user);
 		theBill.setIsPayed(true);
 	}
 

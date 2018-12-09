@@ -1,19 +1,19 @@
 package GUI;
 
 import Entities.Apartment;
+import Entities.User;
 
-class ShoppingListButton extends CommandButton {
-	private Apartment apartment;
+public class ShoppingListButton extends CommandButton {
 	
-	public ShoppingListButton(Apartment apartment) {
-		super(apartment);
-		this.apartment = apartment;
+	public ShoppingListButton(Apartment apartment, User currentUser) {
+		super(apartment, currentUser);
 		this.setText(SHOPPING_LIST);
 	}
 
 	@Override
-	public void OpenNewPane() {
-		new ShoppingListPane(apartment);
+	public void OpenNewPane(Apartment a, User user) throws Exception {	
+			new ShoppingListPane(a, user);
+		
 	}
 
 }

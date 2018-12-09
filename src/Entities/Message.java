@@ -6,13 +6,13 @@ import java.util.Date;
 public class Message {
 
 	private String content;
-	private Date date;
+	private String date;
 	private User sender;
 
 	public Message(String content, User sender) {
 		super();
 		this.content = content;
-		this.date = new Date();
+		this.date = new Date().toString();
 		this.sender = sender;
 	}
 
@@ -20,12 +20,16 @@ public class Message {
 		return content;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
 	public User getSender() {
 		return sender;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 	@Override
