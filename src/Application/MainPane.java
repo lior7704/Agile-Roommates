@@ -1,5 +1,7 @@
 package Application;
 
+import java.io.FileNotFoundException;
+
 import Entities.Apartment;
 import Entities.User;
 import GUI.AgileRoommatesFinals;
@@ -23,7 +25,14 @@ public class MainPane extends Application implements AgileRoommatesFinals {
 		primaryStage.setTitle(TITLE);
 		primaryStage.setScene(scene);
 		primaryStage.show();
-	//	primaryStage.setOnCloseRequest(e -> );
+		primaryStage.setOnCloseRequest(e -> {
+			try {
+				apartment.saveToFile();
+			} catch (FileNotFoundException e1) {
+				System.out.println("Write apartment from file failed");
+				e1.printStackTrace();
+			}
+		});
 	}
 	
 	public void initApartment() {
@@ -35,11 +44,6 @@ public class MainPane extends Application implements AgileRoommatesFinals {
 		apartment.addResident(new User(3333, "Nofar", "0544556679", "nofar.alfasi@gmail.com"));
 		apartment.addResident(new User(4444, "Lior", "0544556680", "lior.gal@gmail.com"));
 		apartment.addResident(new User(5555, "Chen", "0544556681", "chen.turgeman@gmail.com"));
-		
-		System.out.println("Number of users: " +apartment.getResidents().size());
-		System.out.println("The users are: ");
-		for(User u:apartment.getResidents())
-			System.out.print(u.getName()+", ");
 		
 	/*	apartment.getShoppingList().addProduct(new Product("apple", 7));
 		apartment.getShoppingList().addProduct(new Product("lemon", 3));

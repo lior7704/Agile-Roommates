@@ -1,7 +1,6 @@
 package GUI;
 
 import java.io.IOException;
-import java.io.RandomAccessFile;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -30,23 +29,24 @@ public class CashBoxPane implements AgileRoommatesFinals {
 	private ListView<Bill> listView;
 	private Apartment apartment;
 	private User currentUser;
-	private RandomAccessFile rf;
+	private GridPane balancePane = new GridPane();;
+	private BorderPane unitPane = new BorderPane();
+	private GridPane billsPane = new GridPane();
 
 	public CashBoxPane(Apartment apartment, User currentUser) throws IOException {
-		this.rf = new RandomAccessFile(CASHBOX_FILE, FILE_MODE);
 		this.apartment = apartment;
 		this.currentUser = currentUser;
-		if (getFile().length() > 1)
-			readFromFile();
+ 
+		setBalanceView();
 
-		Stage stage = new Stage();
-		GridPane billsPane = new GridPane();
 		billsPane.add(addBillButton = new Button("Add Bill"), 0, 1);
 		billsPane.add(payButton = new Button("Pay Bill"), 0, 2);
 		billsPane.setVisible(true);
+
 		TextField billNameTextField = new TextField();
 		TextField billCostTextField = new TextField();
 		TextField billDueDateTextField = new TextField();
+
 		listView = new ListView<Bill>();
 
 		billsPane.setPadding(new Insets(15));
@@ -67,28 +67,32 @@ public class CashBoxPane implements AgileRoommatesFinals {
 		billDueDateTextField.setPrefWidth(100);
 
 		setListView();
-		listView.setPrefWidth(120);
-		listView.setPrefHeight(70);
+
+		listView.setPrefWidth(100);
+		listView.setPrefHeight(200);
+
 		VBox box = new VBox();
 		Label weNeedToPayLabel = new Label("Bills we need to pay");
 		VBox.setMargin(weNeedToPayLabel, new Insets(20, 20, 20, 20));
 		box.getChildren().addAll(listView);
+		box.setPrefHeight(500);
 		VBox.setVgrow(listView, Priority.ALWAYS);
-
-		BorderPane unitPane = new BorderPane();
-
+		
 		unitPane.setTop(billsPane);
 		unitPane.setCenter(box);
-
+		unitPane.setBottom(balancePane);
+		
+		Stage stage = new Stage();
 		Scene scene = new Scene(unitPane, 500, 800);
+
 		stage.setScene(scene);
 		stage.setAlwaysOnTop(true);
 		stage.setResizable(false);
 		stage.setX(200);
 		stage.setY(200);
 		stage.show();
+
 		stage.setTitle(CASH_BOX);
-		stage.setOnCloseRequest(e -> writeCashBoxToFile());
 
 		addBillButton.setOnMouseClicked(e -> {
 			double amount = 0;
@@ -102,13 +106,17 @@ public class CashBoxPane implements AgileRoommatesFinals {
 				apartment.getCashBox().addBillToList(new Bill(billNameTextField.getText(), amount, billDueDateTextField.getText()));
 			}
 			setListView();
+			setBalanceView();
 		});
+		
 		payButton.setOnMouseClicked(e -> {
 			System.out.println(this.currentUser);
 			apartment.getCashBox().payBill(listView.getSelectionModel().getSelectedItem(), this.currentUser);
 			setListView();
+			setBalanceView();
 		});
 	}
+	
 
 	public void setListView() {
 		ObservableList<Bill> items = FXCollections.observableArrayList();
@@ -116,45 +124,24 @@ public class CashBoxPane implements AgileRoommatesFinals {
 		listView.setItems(items);
 		listView.refresh();
 	}
-
-	public void writeCashBoxToFile() {
-		try {
-			getFile().setLength(0);
-			getFile().seek(0);
-			getFile().writeInt(listView.getItems().size());
-			for (int i = 0; i < listView.getItems().size(); i++) {
-				FixedLengthStringIO.writeFixedLengthString(listView.getItems().get(i).getNameOfBill(), LONG_STRING_SIZE,
-						getFile());
-				FixedLengthStringIO.writeFixedLengthString(Double.toString(listView.getItems().get(i).getCost()),
-						SHORT_INT_SIZE, getFile());
-				FixedLengthStringIO.writeFixedLengthString(listView.getItems().get(i).getDatesOfBill(), LONG_INT_SIZE,
-						getFile());
-				if (listView.getItems().get(i).isPayed())
-					getFile().writeInt(listView.getItems().get(i).getPayedBy().getId());
-				else
-					getFile().writeInt(0);
-			}
-			getFile().close();
-		} catch (IOException ex) {
-			ex.printStackTrace();
+	
+	public void setBalanceView() {
+		int balanceIndex = 1;
+		balancePane.getChildren().clear();
+		balancePane.add(new Label("Balance Status: "), 0, 0);
+		balancePane.add(new Label("Total Balance Status: "), 2, 0);
+		balancePane.add(new Label(String.valueOf(apartment.getCashBox().getTotalCashBalance())), 3, 0);
+		balancePane.setPadding(new Insets(3));
+		balancePane.setHgap(10);
+		balancePane.setVgap(10);
+		balancePane.setMaxHeight(20);
+		balancePane.setAlignment(Pos.CENTER_LEFT);
+		for (User user : apartment.getCashBox().getUsersCashBalance().keySet()) {
+			balancePane.add(new Label(user.getName()), 0, balanceIndex);
+			balancePane.add(new Label(String.valueOf(apartment.getCashBox().getUsersCashBalance().get(user))), 1,
+					balanceIndex);
+			balanceIndex++;
 		}
 	}
 
-	public RandomAccessFile getFile() {
-		return rf;
-	}
-
-	public void readFromFile() throws IOException {
-		getFile().seek(0);
-		int size = getFile().readInt();
-		for (int i = 0; i < size; i++) {
-			String name = FixedLengthStringIO.readFixedLengthString(LONG_STRING_SIZE, getFile());
-			Double cost = Double.parseDouble(FixedLengthStringIO.readFixedLengthString(SHORT_INT_SIZE, getFile()));
-			String date = FixedLengthStringIO.readFixedLengthString(LONG_INT_SIZE, getFile());
-			apartment.getCashBox().addBillToList(new Bill(name.trim(), cost, date.trim()));
-			int userID = getFile().readInt();
-			if (userID != 0)
-				apartment.getCashBox().getBillList().get(i).setPayedBy(apartment.getUserOnResidentsListByID(userID));
-		}
-	}
 }

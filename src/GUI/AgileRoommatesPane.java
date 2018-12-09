@@ -1,5 +1,7 @@
 package GUI;
 
+import java.io.IOException;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -80,6 +82,12 @@ public class AgileRoommatesPane extends GridPane implements AgileRoommatesFinals
 						this.getChildren().clear();
 						setWelcomePane();
 						setButtonsPane();
+						try {
+							apartment.readApartmentFromFile();
+						} catch (IOException e1) {
+							System.out.println("Read apartment from file failed");
+							e1.printStackTrace();
+						}
 					}
 				} catch (NumberFormatException e1) {
 					JOptionPane.showMessageDialog(new JFrame(), "ID must be numeral!", NUMBER_EXCEPTION_TITLE,

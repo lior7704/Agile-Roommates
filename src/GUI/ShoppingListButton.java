@@ -12,7 +12,7 @@ public class ShoppingListButton extends CommandButton {
 
 	@Override
 	public void OpenNewPane(Apartment a, User user) throws Exception {	
-			new ShoppingListPane(a, user);
+			new ShoppingListPane(a);
 		
 	}
 

@@ -1,14 +1,12 @@
 package GUI;
 
 import java.io.IOException;
-import java.io.RandomAccessFile;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import Entities.Apartment;
 import Entities.Product;
-import Entities.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -29,15 +27,10 @@ public class ShoppingListPane implements AgileRoommatesFinals {
 	private Button removeButton;
 	private ListView<Product> listView;
 	private Apartment apartment;
-	private RandomAccessFile rf;
-	private User currentUser = null;
 
-	public ShoppingListPane(Apartment apartment, User currentUser) throws IOException {
-		this.rf = new RandomAccessFile(SHOPPING_LIST_FILE, FILE_MODE);
+	public ShoppingListPane(Apartment apartment) throws IOException {
 		this.apartment = apartment;
-		this.currentUser = currentUser;
-		if (getFile().length()>1)
-			readFromFile();
+
 		Stage stage = new Stage();
 		GridPane addProductPane = new GridPane();
 		addProductPane.add(addButton = new Button("Add Product"), 0, 1);
@@ -81,14 +74,14 @@ public class ShoppingListPane implements AgileRoommatesFinals {
 		stage.setY(200);
 		stage.show();
 		stage.setTitle(SHOPPING_LIST);
-		stage.setOnCloseRequest(e -> writeShoppingListToFile());
 
 		addButton.setOnMouseClicked(e -> {
 			int amount = 0;
 			try {
 				amount = Integer.parseInt(amountTextField.getText());
 			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(new JFrame(), NUMBER_FORMAT_EXCEPTION, NUMBER_EXCEPTION_TITLE, JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(new JFrame(), NUMBER_FORMAT_EXCEPTION, NUMBER_EXCEPTION_TITLE,
+						JOptionPane.ERROR_MESSAGE);
 			}
 			if (productTextField.getText().length() != 0 && amount > 0) {
 				apartment.getShoppingList().addProduct(new Product(productTextField.getText(), amount));
@@ -107,36 +100,4 @@ public class ShoppingListPane implements AgileRoommatesFinals {
 		listView.setItems(items);
 		listView.refresh();
 	}
-
-	public void writeShoppingListToFile() {
-		try {
-			getFile().setLength(0);
-			getFile().seek(0);
-			getFile().writeInt(listView.getItems().size());
-			for (int i = 0; i < listView.getItems().size(); i++) {
-				FixedLengthStringIO.writeFixedLengthString(listView.getItems().get(i).getNameOfProduct(),
-						SHORT_STRING_SIZE, getFile());
-				getFile().writeInt(listView.getItems().get(i).getAmount());
-			}
-			getFile().close();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	public RandomAccessFile getFile() {
-		return rf;
-	}
-
-	public void readFromFile() throws IOException {
-		getFile().seek(0);
-		int size = getFile().readInt();
-		for (int i = 0; i < size; i++) {
-			String name = FixedLengthStringIO.readFixedLengthString(SHORT_STRING_SIZE, getFile());
-			int amount = getFile().readInt();
-			apartment.getShoppingList().addProduct(new Product(name, amount));
-		}
-
-	}
-
 }

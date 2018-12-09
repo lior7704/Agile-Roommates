@@ -1,9 +1,14 @@
 package Entities;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Apartment {
+import GUI.AgileRoommatesFinals;
+
+public class Apartment implements AgileRoommatesFinals{
 	private List<User> residents;
 	private ShoppingList shoppingList;
 	private MessagesList messages;
@@ -13,14 +18,16 @@ public class Apartment {
 		residents = new ArrayList<User>();
 		shoppingList = new ShoppingList();
 		messages = new MessagesList();
-		cashBox = new CashBox();
+		cashBox = new CashBox(residents);
+
 	}
 	
 	public Apartment(List<User> residents) {
 		this.residents = residents;
 		this.shoppingList = new ShoppingList();
 		this.messages = new MessagesList();
-		this.cashBox = new CashBox();
+		this.cashBox = new CashBox(residents);
+
 	}
 
 	public List<User> getResidents() {
@@ -81,5 +88,30 @@ public class Apartment {
 			}
 		}
 		return null;
+	}
+
+	public void saveToFile() throws FileNotFoundException {
+		RandomAccessFile rfShoppingList = new RandomAccessFile(SHOPPING_LIST_FILE, FILE_MODE);
+		shoppingList.writeShoppingListToFile(rfShoppingList);
+		
+		RandomAccessFile rfCashBox = new RandomAccessFile(CASHBOX_FILE, FILE_MODE);
+		cashBox.writeCashBoxToFile(rfCashBox);
+		
+		//RandomAccessFile rfMessagesList = new RandomAccessFile(MESSAGES_LIST_FILE, FILE_MODE);
+		//messages.writeCashBoxToFile(rfMessagesList);
+	}
+
+	public void readApartmentFromFile() throws IOException {
+		RandomAccessFile rfShoppingList = new RandomAccessFile(SHOPPING_LIST_FILE, FILE_MODE);
+		if(rfShoppingList.length() > 1)
+			shoppingList.readShoppingListFromFile(rfShoppingList);
+		
+		RandomAccessFile rfCashBox = new RandomAccessFile(CASHBOX_FILE, FILE_MODE);
+		if(rfCashBox.length() > 1)
+			cashBox.readCashBoxFromFile(rfCashBox);
+		
+		//RandomAccessFile rfMessagesList = new RandomAccessFile(MESSAGES_LIST_FILE, FILE_MODE);
+		//messages.readMessagesListFromFile(rfMessagesList);
+		
 	}
 }
