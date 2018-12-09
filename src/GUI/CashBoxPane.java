@@ -72,24 +72,16 @@ public class CashBoxPane {
 		box.getChildren().addAll(listView);
 		box.setPrefHeight(500);
 		VBox.setVgrow(listView, Priority.ALWAYS);
-
-		BorderPane unitPane = new BorderPane();
-		unitPane.setTop(balancePane);
-		unitPane.setCenter(billsPane);
-		unitPane.setBottom(box);
 		
-		GridPane unittPane = new GridPane();
-		unittPane.add(balancePane, 0, 0);
-		unittPane.add(billsPane, 0, 1);
-		unittPane.add(box, 0, 2);
-		unittPane.setPadding(new Insets(2));
-		unittPane.setAlignment(Pos.TOP_CENTER);
-
-
-		
+		GridPane unitPane = new GridPane();
+		unitPane.add(balancePane, 0, 0);
+		unitPane.add(billsPane, 0, 1);
+		unitPane.add(box, 0, 2);
+		unitPane.setPadding(new Insets(2));
+		unitPane.setAlignment(Pos.TOP_CENTER);
 		
 
-		Scene scene = new Scene(unittPane, 420, 800);
+		Scene scene = new Scene(unitPane, 420, 800);
 		stage.setScene(scene);
 		stage.setAlwaysOnTop(true);
 		stage.setResizable(false);
