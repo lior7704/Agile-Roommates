@@ -71,6 +71,7 @@ public class CashBox implements AgileRoommatesFinals {
 		else {	
 			theBill.setPaidBy(currentUser);
 			theBill.setIsPaid(true);
+			totalCashBalance = totalCashBalance + theBill.getCost();
 			for (User user : usersCashBalance.keySet()) {
 				if (user == currentUser) {
 					double value = theBill.getCost() - theBill.sharedPart(usersCashBalance.size());
@@ -99,6 +100,7 @@ public class CashBox implements AgileRoommatesFinals {
 			rf.seek(0);
 			// Write usersCashBalance
 			for (User user : usersCashBalance.keySet()) {
+				rf.writeInt(user.getId());
 				rf.writeDouble(usersCashBalance.get(user));
 			}
 			// Write Bills List
@@ -124,7 +126,12 @@ public class CashBox implements AgileRoommatesFinals {
 	public void readCashBoxFromFile(RandomAccessFile rf, List<User> residents) throws IOException {
 		rf.seek(0);
 		for (int i = 0; i < residents.size(); i++) {
-			usersCashBalance.put(residents.get(i), rf.readDouble());
+			int tempId = rf.readInt();
+			for(User user : residents) {
+				if(user.getId() == tempId)
+					usersCashBalance.put(user, rf.readDouble());
+			}
+			
 		}
 		int size = rf.readInt();
 		for (int i = 0; i < size; i++) {
