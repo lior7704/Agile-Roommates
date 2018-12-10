@@ -8,10 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import GUI.AgileRoommatesFinals;
 import GUI.FixedLengthStringIO;
 
-public class CashBox implements AgileRoommatesFinals{
+public class CashBox implements AgileRoommatesFinals {
 
 	private HashMap<User, Double> usersCashBalance;
 	private List<Bill> billList;
@@ -24,9 +27,15 @@ public class CashBox implements AgileRoommatesFinals{
 
 	public CashBox(List<User> residents) {
 		usersCashBalance = new HashMap<User, Double>();
-		for(User user : residents) {
+		for (User user : residents) {
 			usersCashBalance.put(user, 0.0);
 		}
+		billList = new ArrayList<Bill>();
+		totalCashBalance = 0;
+	}
+
+	public CashBox() {
+		usersCashBalance = new HashMap<User, Double>();
 		billList = new ArrayList<Bill>();
 		totalCashBalance = 0;
 	}
@@ -56,16 +65,20 @@ public class CashBox implements AgileRoommatesFinals{
 	}
 
 	public void payBill(Bill theBill, User currentUser) {
-		theBill.setPaidBy(currentUser);
-		theBill.setIsPaid(true);
-		totalCashBalance -= theBill.getCost();
-		for (User user : usersCashBalance.keySet()) {
-			if (user == currentUser) {
-				double value = theBill.getCost() - theBill.sharedPart(usersCashBalance.size());
-				usersCashBalance.put(user, usersCashBalance.get(user) + value);
-			} else {
-				double value = theBill.sharedPart(usersCashBalance.size());
-				usersCashBalance.put(user, usersCashBalance.get(user) - value);
+		if(theBill.isPaid())
+			JOptionPane.showMessageDialog(new JFrame(), BILL_PAID_ERROR, BILL_PAID_ERROR,
+					JOptionPane.ERROR_MESSAGE);
+		else {	
+			theBill.setPaidBy(currentUser);
+			theBill.setIsPaid(true);
+			for (User user : usersCashBalance.keySet()) {
+				if (user == currentUser) {
+					double value = theBill.getCost() - theBill.sharedPart(usersCashBalance.size());
+					usersCashBalance.put(user, usersCashBalance.get(user) + value);
+				} else {
+					double value = theBill.sharedPart(usersCashBalance.size());
+					usersCashBalance.put(user, usersCashBalance.get(user) - value);
+				}
 			}
 		}
 	}
@@ -77,34 +90,42 @@ public class CashBox implements AgileRoommatesFinals{
 
 	public void addBillToList(Bill theBill) {
 		billList.add(theBill);
-		totalCashBalance = totalCashBalance + theBill.getCost();
+		totalCashBalance = totalCashBalance - theBill.getCost();
 	}
-	
+
 	public void writeCashBoxToFile(RandomAccessFile rf) {
 		try {
 			rf.setLength(0);
 			rf.seek(0);
+			// Write usersCashBalance
+			for (User user : usersCashBalance.keySet()) {
+				rf.writeDouble(usersCashBalance.get(user));
+			}
+			// Write Bills List
 			rf.writeInt(billList.size());
 			for (int i = 0; i < billList.size(); i++) {
-				FixedLengthStringIO.writeFixedLengthString(billList.get(i).getNameOfBill(), LONG_STRING_SIZE,
+				FixedLengthStringIO.writeFixedLengthString(billList.get(i).getNameOfBill(), LONG_STRING_SIZE, rf);
+				FixedLengthStringIO.writeFixedLengthString(Double.toString(billList.get(i).getCost()), SHORT_INT_SIZE,
 						rf);
-				FixedLengthStringIO.writeFixedLengthString(Double.toString(billList.get(i).getCost()),
-						SHORT_INT_SIZE, rf);
-				FixedLengthStringIO.writeFixedLengthString(billList.get(i).getDatesOfBill(), LONG_INT_SIZE,
-						rf);
+				FixedLengthStringIO.writeFixedLengthString(billList.get(i).getDatesOfBill(), LONG_INT_SIZE, rf);
 				if (billList.get(i).isPaid())
 					rf.writeInt(billList.get(i).getPaidBy().getId());
 				else
 					rf.writeInt(0);
 			}
+			// Write totalCashBalance
+			rf.writeDouble(totalCashBalance);
 			rf.close();
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
 	}
 
-	public void readCashBoxFromFile(RandomAccessFile rf) throws IOException {
+	public void readCashBoxFromFile(RandomAccessFile rf, List<User> residents) throws IOException {
 		rf.seek(0);
+		for (int i = 0; i < residents.size(); i++) {
+			usersCashBalance.put(residents.get(i), rf.readDouble());
+		}
 		int size = rf.readInt();
 		for (int i = 0; i < size; i++) {
 			String name = FixedLengthStringIO.readFixedLengthString(LONG_STRING_SIZE, rf);
@@ -114,12 +135,13 @@ public class CashBox implements AgileRoommatesFinals{
 			int userID = rf.readInt();
 			if (userID != 0) {
 				for (User user : usersCashBalance.keySet()) {
-					if(user.getId() == userID) {
+					if (user.getId() == userID) {
 						billList.get(i).setPaidBy(user);
 						break;
 					}
 				}
 			}
 		}
+		totalCashBalance = rf.readDouble();
 	}
 }

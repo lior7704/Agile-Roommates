@@ -17,6 +17,7 @@ public interface AgileRoommatesFinals {
 	final static String LOGIN = "Login";
 	final static String SEND = "Send";
 	final static String NUMBER_FORMAT_EXCEPTION = "Amount must be numeral!";
+	final static String BILL_PAID_ERROR = "This bill was already paid!";
 	final static String NUMBER_EXCEPTION_TITLE = "Number Format Exception";
 	final static String EMPTY_TEXT_EXCEPTION = "Message cannot be empty";
 	final static String EMPTY_EXCEPTION_TITLE = "Empty Text Exception";

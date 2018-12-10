@@ -102,13 +102,15 @@ public class Apartment implements AgileRoommatesFinals{
 	}
 
 	public void readApartmentFromFile() throws IOException {
+		this.shoppingList = new ShoppingList();
 		RandomAccessFile rfShoppingList = new RandomAccessFile(SHOPPING_LIST_FILE, FILE_MODE);
 		if(rfShoppingList.length() > 1)
 			shoppingList.readShoppingListFromFile(rfShoppingList);
 		
+		this.cashBox = new CashBox(residents);
 		RandomAccessFile rfCashBox = new RandomAccessFile(CASHBOX_FILE, FILE_MODE);
 		if(rfCashBox.length() > 1)
-			cashBox.readCashBoxFromFile(rfCashBox);
+			cashBox.readCashBoxFromFile(rfCashBox, residents);
 		
 		//RandomAccessFile rfMessagesList = new RandomAccessFile(MESSAGES_LIST_FILE, FILE_MODE);
 		//messages.readMessagesListFromFile(rfMessagesList);

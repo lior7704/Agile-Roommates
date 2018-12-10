@@ -13,15 +13,6 @@ public class CashBoxButton extends CommandButton {
 	@Override
 	public void OpenNewPane(Apartment apartment, User currentUser) throws Exception {
 		new CashBoxPane(apartment, currentUser);
-		/*try {
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 	}
 }
 

@@ -110,7 +110,6 @@ public class CashBoxPane implements AgileRoommatesFinals {
 		});
 		
 		payButton.setOnMouseClicked(e -> {
-			System.out.println(this.currentUser);
 			apartment.getCashBox().payBill(listView.getSelectionModel().getSelectedItem(), this.currentUser);
 			setListView();
 			setBalanceView();
