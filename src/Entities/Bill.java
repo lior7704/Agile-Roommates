@@ -64,9 +64,9 @@ public class Bill {
 	@Override
 	public String toString() {
 		if (isPaid == true)
-			return nameOfBill + ", cost: " + cost + ", payed by: " + paidBy;
+			return nameOfBill + ", cost: " + cost + ", paid by: " + paidBy;
 		else
-			return nameOfBill + ", cost: " + cost + ", not payed" + ", due until: " + dueDate;
+			return nameOfBill + ", cost: " + cost + ", not paid" + ", due until: " + dueDate;
 	}
 
 }

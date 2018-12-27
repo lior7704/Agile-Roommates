@@ -84,7 +84,7 @@ public class ShoppingListPane implements AgileRoommatesFinals {
 						JOptionPane.ERROR_MESSAGE);
 			}
 			if (productTextField.getText().length() != 0 && amount > 0) {
-				apartment.getShoppingList().addProduct(new Product(productTextField.getText(), amount));
+				apartment.getShoppingList().addProduct(new Product(productTextField.getText().trim(), amount));
 			}
 			setListView();
 		});

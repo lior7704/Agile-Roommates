@@ -65,10 +65,9 @@ public class CashBox implements AgileRoommatesFinals {
 	}
 
 	public void payBill(Bill theBill, User currentUser) {
-		if(theBill.isPaid())
-			JOptionPane.showMessageDialog(new JFrame(), BILL_PAID_ERROR, BILL_PAID_ERROR,
-					JOptionPane.ERROR_MESSAGE);
-		else {	
+		if (theBill.isPaid())
+			JOptionPane.showMessageDialog(new JFrame(), BILL_PAID_ERROR, BILL_PAID_ERROR, JOptionPane.ERROR_MESSAGE);
+		else {
 			theBill.setPaidBy(currentUser);
 			theBill.setIsPaid(true);
 			totalCashBalance = totalCashBalance + theBill.getCost();
@@ -127,11 +126,11 @@ public class CashBox implements AgileRoommatesFinals {
 		rf.seek(0);
 		for (int i = 0; i < residents.size(); i++) {
 			int tempId = rf.readInt();
-			for(User user : residents) {
-				if(user.getId() == tempId)
+			for (User user : residents) {
+				if (user.getId() == tempId)
 					usersCashBalance.put(user, rf.readDouble());
 			}
-			
+
 		}
 		int size = rf.readInt();
 		for (int i = 0; i < size; i++) {

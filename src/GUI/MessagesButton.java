@@ -12,6 +12,6 @@ public class MessagesButton extends CommandButton {
 
 	@Override
 	public void OpenNewPane(Apartment apartment, User currentUser) throws Exception {
-		//new MessageListPane(apartment, currentUser);
+		new MessageListPane(apartment, currentUser);
 	}
 }

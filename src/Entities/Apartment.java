@@ -97,8 +97,8 @@ public class Apartment implements AgileRoommatesFinals{
 		RandomAccessFile rfCashBox = new RandomAccessFile(CASHBOX_FILE, FILE_MODE);
 		cashBox.writeCashBoxToFile(rfCashBox);
 		
-		//RandomAccessFile rfMessagesList = new RandomAccessFile(MESSAGES_LIST_FILE, FILE_MODE);
-		//messages.writeCashBoxToFile(rfMessagesList);
+		RandomAccessFile rfMessagesList = new RandomAccessFile(MESSAGES_LIST_FILE, FILE_MODE);
+		messages.writeMessagesListToFile(rfMessagesList);
 	}
 
 	public void readApartmentFromFile() throws IOException {
@@ -112,8 +112,8 @@ public class Apartment implements AgileRoommatesFinals{
 		if(rfCashBox.length() > 1)
 			cashBox.readCashBoxFromFile(rfCashBox, residents);
 		
-		//RandomAccessFile rfMessagesList = new RandomAccessFile(MESSAGES_LIST_FILE, FILE_MODE);
-		//messages.readMessagesListFromFile(rfMessagesList);
+		RandomAccessFile rfMessagesList = new RandomAccessFile(MESSAGES_LIST_FILE, FILE_MODE);
+		messages.readMessagesListFromFile(rfMessagesList);
 		
 	}
 }

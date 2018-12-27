@@ -22,6 +22,8 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class AgileRoommatesPane extends GridPane implements AgileRoommatesFinals, AgileRoommatesEvent {
@@ -46,7 +48,6 @@ public class AgileRoommatesPane extends GridPane implements AgileRoommatesFinals
 		}
 	};
 
-	
 	public AgileRoommatesPane(Apartment a) {
 		this.apartment = a;
 		shoppingListButton = new ShoppingListButton(apartment, currentUser);
@@ -61,15 +62,16 @@ public class AgileRoommatesPane extends GridPane implements AgileRoommatesFinals
 		this.setStyle(MY_STYLE);
 
 		Text text = new Text("WELCOME");
-		text.setFont(Font.font("Edwardian Script ITC", 50));
+		text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50));
+		text.setFill(Color.ALICEBLUE);
 		text.setFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE,
 				new Stop[] { new Stop(0, Color.LIGHTSKYBLUE), new Stop(1, Color.PINK) }));
 		text.setStrokeWidth(3);
 		this.add(text, 0, 0);
-		
+
 		GridPane.setHgrow(this, Priority.ALWAYS);
-		GridPane.setVgrow(this, Priority.ALWAYS);		
-		
+		GridPane.setVgrow(this, Priority.ALWAYS);
+
 		setLoginPane();
 
 		loginButton.setOnMouseClicked(e -> {
@@ -110,13 +112,13 @@ public class AgileRoommatesPane extends GridPane implements AgileRoommatesFinals
 		welcomePane.setAlignment(Pos.TOP_LEFT);
 
 		GridPane.setHgrow(welcomePane, Priority.ALWAYS);
-		GridPane.setVgrow(welcomePane, Priority.ALWAYS);	
-		
+		GridPane.setVgrow(welcomePane, Priority.ALWAYS);
+
 		welcomePane.setVgap(10);
 		welcomePane.setHgap(10);
 		welcomePane.add(text, 0, 0);
 		this.add(welcomePane, 0, 0);
-		
+
 	}
 
 	public void setButtonsPane() {
@@ -149,9 +151,12 @@ public class AgileRoommatesPane extends GridPane implements AgileRoommatesFinals
 
 		GridPane.setHgrow(loginPane, Priority.ALWAYS);
 		GridPane.setVgrow(loginPane, Priority.ALWAYS);
+		
+		loginButton.setPadding(new Insets(10, 10, 10, 10));
 
 		this.add(loginPane, 0, 1);
 		this.add(loginButton, 0, 2);
+		
 	}
 
 	public void setCurrentUser(String name, int id) {

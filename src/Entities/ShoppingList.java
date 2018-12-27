@@ -28,7 +28,6 @@ public class ShoppingList implements AgileRoommatesFinals{
 		for (Product product : products) {
 			if(product.getNameOfProduct().equals(p.getNameOfProduct())) {
 				product.setAmount(product.getAmount() + p.getAmount());
-				System.out.println(product.getAmount());
 				return;
 			}
 		}

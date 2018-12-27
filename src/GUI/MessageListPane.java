@@ -1,7 +1,6 @@
 package GUI;
 
 import java.io.IOException;
-import java.io.RandomAccessFile;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -28,15 +27,11 @@ public class MessageListPane implements AgileRoommatesFinals {
 	private Button addButton;
 	private ListView<Message> listView;
 	private Apartment apartment;
-	private RandomAccessFile rf;
 	private User currentUser = null;
 
 	public MessageListPane(Apartment apartment, User currentUser) throws IOException {
-		this.rf = new RandomAccessFile(MESSAGES_LIST_FILE, FILE_MODE);
 		this.apartment = apartment;
 		this.currentUser = currentUser;
-		if (getFile().length()>1)
-			readFromFile();	
 		
 		Stage stage = new Stage();
 		GridPane addMessagePane = new GridPane();
@@ -76,11 +71,10 @@ public class MessageListPane implements AgileRoommatesFinals {
 		stage.setY(200);
 		stage.show();
 		stage.setTitle(MESSAGE_LIST_TITLE);
-		stage.setOnCloseRequest(e -> writeMessagesListToFile());
 
 		addButton.setOnMouseClicked(e -> {
 			if (messageTextField.getText().length() != 0) {
-				apartment.getMessagesList().addMessage(new Message(messageTextField.getText(), this.currentUser));
+				apartment.getMessagesList().addMessage(0, new Message(messageTextField.getText().trim(), this.currentUser.getName()));
 			} else {
 				JOptionPane.showMessageDialog(new JFrame(), EMPTY_TEXT_EXCEPTION, EMPTY_EXCEPTION_TITLE, JOptionPane.ERROR_MESSAGE);
 			}
@@ -95,37 +89,5 @@ public class MessageListPane implements AgileRoommatesFinals {
 		listView.refresh();
 	}
 
-	public void writeMessagesListToFile() {
-		try {
-			getFile().setLength(0);
-			getFile().seek(0);
-			getFile().writeInt(listView.getItems().size());
-			for (int i = 0; i < listView.getItems().size(); i++) {
-				FixedLengthStringIO.writeFixedLengthString(listView.getItems().get(i).getContent(), LONG_STRING_SIZE,
-						getFile());
-				FixedLengthStringIO.writeFixedLengthString(listView.getItems().get(i).getDate().toString(),
-						LONG_STRING_SIZE, getFile());
-				getFile().writeInt(listView.getItems().get(i).getSender().getId());
-			}
-			getFile().close();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	public RandomAccessFile getFile() {
-		return rf;
-	}
-
-	public void readFromFile() throws IOException {
-		getFile().seek(0);
-		int size = getFile().readInt();
-		for (int i = 0; i < size; i++) {
-			String content = FixedLengthStringIO.readFixedLengthString(LONG_STRING_SIZE, getFile());
-			int userID = getFile().readInt();
-			apartment.getMessagesList().addMessage(new Message(content, apartment.getUserOnResidentsListByID(userID)));
-			String date = FixedLengthStringIO.readFixedLengthString(LONG_STRING_SIZE, getFile());
-			apartment.getMessagesList().getMessages().get(i).setDate(date);
-		}
-	}
+	
 }
