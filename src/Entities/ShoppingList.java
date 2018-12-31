@@ -73,7 +73,7 @@ public class ShoppingList implements AgileRoommatesFinals{
 		for (int i = 0; i < size; i++) {
 			String name = FixedLengthStringIO.readFixedLengthString(SHORT_STRING_SIZE, rf);
 			int amount = rf.readInt();
-			addProduct(new Product(name, amount));
+			addProduct(new Product(name.trim().toLowerCase(), amount));
 		}
 	}
 }

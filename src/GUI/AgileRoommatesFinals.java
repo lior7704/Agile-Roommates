@@ -25,9 +25,24 @@ public interface AgileRoommatesFinals {
 	final static int LONG_INT_SIZE = 11;
 	final static int SHORT_STRING_SIZE = 10;
 	final static int SHORT_INT_SIZE = 5;
-
+	final static String IMAGE_URL = "https://cdn4.vectorstock.com/i/1000x1000/36/08/blue-overlap-stripe-rush-in-dark-background-vector-21283608.jpg" ;
+		// https://cdn4.vectorstock.com/i/1000x1000/36/08/blue-overlap-stripe-rush-in-dark-background-vector-21283608.jpg
+	//https://i.ytimg.com/vi/zgg1xGSGw0s/maxresdefault.jpg
 	final static String STYLE_COMMAND = "-fx-border-color: grey;" + " -fx-border-width: 3;"
 			+ " -fx-border-style: solid outside ;";
+	
+	final static String MY_STYLE2 = "-fx-padding: 50;" + "-fx-border-style: solid inside;" + "-fx-border-width: 5;"
+			+ "-fx-border-insets: 5;" + "-fx-border-radius: 25;" + "-fx-border-color: LAVENDER;"+ "-fx-background-color: gray;";
+	
 	final static String MY_STYLE = "-fx-padding: 50;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;"
-			+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: blue;";
+			+ "-fx-border-insets: 5;" + "-fx-border-radius: 25;" + "-fx-border-color: LAVENDER;"+"-fx-background-color: #1d1d1d;" + 
+" -fx-background-image: url(https://cdn4.vectorstock.com/i/1000x1000/36/08/blue-overlap-stripe-rush-in-dark-background-vector-21283608.jpg);" + "-fx-background-size: 600, 300;"; 
+	
+	/** -fx-background-image: url("graphics/arrow_t_up_right.png");
+    -fx-background-size: 96, 205;
+    -fx-background-repeat: no-repeat;
+    -fx-border-color: #2e8b57;
+    -fx-border-width: 2px;
+    -fx-padding: 10;
+    -fx-spacing: 8;**/
 }
