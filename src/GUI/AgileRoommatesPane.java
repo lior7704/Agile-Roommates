@@ -172,9 +172,9 @@ public class AgileRoommatesPane extends GridPane implements AgileRoommatesFinals
 		loginPane.add(userNameTextField, 1, 0);
 		loginPane.add(userIDTextField, 1, 1);
 		loginPane.add(loginButton, 1, 2);;
-		loginButton.setBackground(new Background(new BackgroundFill(Color.LAVENDER, CornerRadii.EMPTY, Insets.EMPTY)));
-		loginButton.setStyle("-fx-font-size: 1.7em;"+"-fx-text-fill: black;" + "-fx-font-weight: bolder;");
-		
+		//loginButton.setBackground(new Background(new BackgroundFill(Color.LAVENDER, CornerRadii.EMPTY, Insets.EMPTY)));
+		loginButton.setStyle("-fx-font-size: 1.5em;"+"-fx-text-fill: black;" + "-fx-font-weight: bolder;");
+		loginButton.setDefaultButton(true);
 	
 		loginPane.setAlignment(Pos.TOP_LEFT);
 		loginPane.setVgap(20);

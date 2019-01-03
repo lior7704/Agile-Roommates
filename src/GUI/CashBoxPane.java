@@ -137,7 +137,7 @@ public class CashBoxPane implements AgileRoommatesFinals {
 		balancePane.setAlignment(Pos.CENTER_LEFT);
 		for (User user : apartment.getCashBox().getUsersCashBalance().keySet()) {
 			balancePane.add(new Label(user.getName()), 0, balanceIndex);
-			balancePane.add(new Label(String.valueOf(apartment.getCashBox().getUsersCashBalance().get(user))), 1,
+			balancePane.add(new Label(String.format("%.2f",apartment.getCashBox().getUsersCashBalance().get(user))), 1,
 					balanceIndex);
 			balanceIndex++;
 		}

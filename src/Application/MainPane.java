@@ -38,7 +38,7 @@ public class MainPane extends Application implements AgileRoommatesFinals {
 	public void initApartment() {
 		apartment = new Apartment();
 		
-		apartment.addResident(new User(111, "eee", "0544556677", "elad.madar@gmail.com"));
+		//apartment.addResident(new User(111, "eee", "0544556677", "elad.madar@gmail.com"));
 		apartment.addResident(new User(1111, "Elad", "0544556677", "elad.madar@gmail.com"));
 		apartment.addResident(new User(2222, "Giron", "0544556678", "giron.aptik@gmail.com"));
 		apartment.addResident(new User(3333, "Nofar", "0544556679", "nofar.alfasi@gmail.com"));

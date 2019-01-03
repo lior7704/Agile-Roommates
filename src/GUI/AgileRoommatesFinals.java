@@ -21,7 +21,7 @@ public interface AgileRoommatesFinals {
 	final static String NUMBER_EXCEPTION_TITLE = "Number Format Exception";
 	final static String EMPTY_TEXT_EXCEPTION = "Message cannot be empty";
 	final static String EMPTY_EXCEPTION_TITLE = "Empty Text Exception";
-	final static int LONG_STRING_SIZE = 30; 
+	final static int LONG_STRING_SIZE = 80; 
 	final static int LONG_INT_SIZE = 11;
 	final static int SHORT_STRING_SIZE = 10;
 	final static int SHORT_INT_SIZE = 5;
